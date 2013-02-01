@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2010 Javier G. Orlandi <orlandi@dherkova.com>
+ * Copyright (c) 2009-2013 Javier G. Orlandi <javiergorlandi@gmail.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -51,6 +51,11 @@ void Pattern::loadPatternFromFile(std::string file)
 {
     //png::image< png::gray_pixel_1 > image(file, png::require_color_space< png::gray_pixel_1 >());
     QImage image = QImage(file.c_str());
+    if(image.isNull())
+    {
+        std::cout << "Error. Could not load the pattern file: " << file << "\nQuitting...\n";
+        exit(1);
+    }
     fileName = file;
 
     widthCount = image.width();

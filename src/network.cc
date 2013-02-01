@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2010 Javier G. Orlandi <orlandi@dherkova.com>
+ * Copyright (c) 2009-2013 Javier G. Orlandi <javiergorlandi@gmail.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -36,7 +36,7 @@ Network::Network(neuron::chamberParameters p)
     init();
     addChamber(p);
 }
-        
+
 void Network::init()
 {
     chamber = NULL;
@@ -355,7 +355,7 @@ void Network::saveConnections2(std::string fileName)
         << "%-----------------------------------------------------------------\n";
 
     std::vector<Neuron*> connections;
-    
+
     for(std::vector<Neuron>::iterator i = chamber->neuron.begin(); i != chamber->neuron.end(); i++)
     {
         connections = i->getInputConnections();

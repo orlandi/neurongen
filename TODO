@@ -1,0 +1,2 @@
+1. Avoid the use of Qt altogether (maybe keep the qmake options). We are using QImage and others
+2. Code needs a lot of cleaning
