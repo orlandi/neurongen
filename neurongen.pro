@@ -5,8 +5,8 @@
 TEMPLATE = app
 TARGET = 
 DEPENDPATH += . src
-INCLUDEPATH += . src /opt/local/include/eigen3 /usr/local/include/eigen3 /usr/include/eigen3 /opt/local/include /opt/local/include/QtGui /opt/local/include/QtCore /usr/include/qt4 /usr/include/qt4/QtCore /usr/include/qt4/QtGui
-LIBS += -L/usr/local/lib -lgsl -lgslcblas -fopenmp -lconfig++
+INCLUDEPATH += . src /usr/local/include /opt/local/include/eigen3 /usr/local/include/eigen3 /usr/include/eigen3 /opt/local/include /opt/local/include/QtGui /opt/local/include/QtCore /usr/include/qt4 /usr/include/qt4/QtCore /usr/include/qt4/QtGui /usr/local/include/libgexf-0.1.1 /usr/include/libxml2
+LIBS += -L/usr/local/lib -lgsl -lgslcblas -fopenmp -lconfig++ -lgexf -lxml2
 QMAKE_CXXFLAGS += -fopenmp
 CONFIG = console qt
 #CONFIG += debug

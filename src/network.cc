@@ -25,6 +25,7 @@
 #include "gsl/gsl_randist.h"
 #include "network.h"
 #include <exception>
+#include <libgexf.h>
 
 Network::Network()
 {
@@ -114,6 +115,40 @@ void Network::savePositionalMap(std::string fileName)
     std::cout << "Positional Map Saved.\n";
 }
 
+
+void Network::saveGexf(std::string fileName)
+{
+    libgexf::GEXF *gexf = new libgexf::GEXF();
+    libgexf::DirectedGraph& graph = gexf->getDirectedGraph();
+
+    // nodes
+    graph.addNode("0");
+    graph.addNode("1");
+
+    // edges
+    graph.addEdge("0", "0", "1");
+
+    // node labels
+    libgexf::Data& data = gexf->getData();
+    data.setNodeLabel("0", "Hello");
+    data.setNodeLabel("1", "world");
+
+    // attributes
+    data.addNodeAttributeColumn("0", "foo", "boolean");
+    data.setNodeAttributeDefault("0", "false");
+    data.setNodeValue("1", "0", "true");
+
+    // meta data
+    libgexf::MetaData& meta = gexf->getMetaData();
+    meta.setCreator("The Hitchhiker's Guide to the Galaxy");
+    meta.setDescription("The answer is 42.");
+
+    // write gexf file
+    libgexf::FileWriter *writer = new libgexf::FileWriter();
+    writer->init(fileName.c_str(), gexf);
+    writer->write();
+
+}
 
 void Network::saveAxonalMap(std::string fileName)
 {
@@ -868,7 +903,11 @@ void Network::loadConfigFile(std::string filename)
         if(!configFile->lookupValue("network.output.sizes", tmpStr))
             std::cout << "Warning! Missing output.sizes - Not saving file\n";
         else
-            saveSizes(tmpStr); 
+            saveSizes(tmpStr);
+        if(!configFile->lookupValue("network.output.gexf", tmpStr))
+            std::cout << "Warning! Missing output.gexf - not saving file\n";
+        else
+            saveGexf(tmpStr);
 
         // Save CUX
         if(dtreeparams.CUX)

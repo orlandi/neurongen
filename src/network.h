@@ -45,6 +45,7 @@ class Network
         void saveConnections2(std::string fileName);
         void saveSizes(std::string fileName);
         void saveCUX(std::string fileName);
+        void saveGexf(std::string fileName);
         bool seedRNG();
 
         void loadConfigFile(std::string filename);
@@ -56,7 +57,7 @@ class Network
         gsl_rng* rng;
         libconfig::Config* configFile;
         bool inputActive;
-        std::string inputAxonsFile, inputPositionsFile, CUXfile; 
+        std::string inputAxonsFile, inputPositionsFile, CUXfile, gexfFile;
 };
 
 #endif
