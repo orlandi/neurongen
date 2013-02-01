@@ -25,7 +25,6 @@
 #include "gsl/gsl_randist.h"
 #include "network.h"
 #include <exception>
-#include <libgexf.h>
 
 Network::Network()
 {
@@ -118,36 +117,75 @@ void Network::savePositionalMap(std::string fileName)
 
 void Network::saveGexf(std::string fileName)
 {
-    libgexf::GEXF *gexf = new libgexf::GEXF();
-    libgexf::DirectedGraph& graph = gexf->getDirectedGraph();
+    std::ofstream savedFile(fileName.c_str());
 
-    // nodes
-    graph.addNode("0");
-    graph.addNode("1");
+    if (!savedFile.is_open())
+    {
+        std::cout << "There was an error opening file " << fileName;
+        return;
+    }
+    // gexf file header
+    savedFile
+        << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        << "<gexf xmlns=\"http://www.gexf.net/1.1draft\" xmlns:viz=\"http:///www.gexf.net/1.1draft/viz\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.gexf.net/1.1draft http://gexf.net/1.1draft/gexf.xsd\" version=\"1.1\">\n";
+    // gexf meta information
+    savedFile
+        << "<meta>"
+        << "<creator>Neurongen</creator>"
+        << "<description>Metric network</description>"
+        << "</meta>";
+    // graph initial information
+    savedFile
+        << "<graph mode=\"static\" defaultedgetype=\"directed\">";
+    // Attributes should go here, for now, nothing
+    //<attributes class="node">
+        //  <attribute id="0" title="score" type="float"/>
+    //</attributes>
 
-    // edges
-    graph.addEdge("0", "0", "1");
+    // Nodes information
+    savedFile
+        << "<nodes>";
 
-    // node labels
-    libgexf::Data& data = gexf->getData();
-    data.setNodeLabel("0", "Hello");
-    data.setNodeLabel("1", "world");
+    Vector2d position;
+    for(std::vector<Neuron>::iterator i = chamber->neuron.begin(); i < chamber->neuron.end(); i++)
+    {
+        position = i->getPosition();
 
-    // attributes
-    data.addNodeAttributeColumn("0", "foo", "boolean");
-    data.setNodeAttributeDefault("0", "false");
-    data.setNodeValue("1", "0", "true");
+        savedFile
+            << "<node id =\"" << i-chamber->neuron.begin() << "\" label=\"" << i-chamber->neuron.begin() << "\">"
+            << "<viz:position x=\"" << position.x() << "\" y=\"" << position.y() << "\" z=\"0.0\"/>"
+            // Attributes should go here
+            << "</node>";
+    }
+    savedFile
+        << "</nodes>";
 
-    // meta data
-    libgexf::MetaData& meta = gexf->getMetaData();
-    meta.setCreator("The Hitchhiker's Guide to the Galaxy");
-    meta.setDescription("The answer is 42.");
+    // Edges information
+    savedFile
+        << "<edges>";
 
-    // write gexf file
-    libgexf::FileWriter *writer = new libgexf::FileWriter();
-    writer->init(fileName.c_str(), gexf);
-    writer->write();
+    std::vector<Neuron*> connections;
+    int edgeIndex = 0;
+    for(std::vector<Neuron>::iterator i = chamber->neuron.begin(); i != chamber->neuron.end(); i++)
+    {
+        connections = i->getOutputConnections();
+        for(std::vector<Neuron*>::iterator j = connections.begin(); j != connections.end(); j++)
+        {
+            savedFile
+                << "<edge id=\"" << edgeIndex << "\" source=\"" << i->getIndex() << "\" target=\"" << (*j)->getIndex() << "\" weight=\"1\"/>";
+            edgeIndex++;
+        }
+    }
+    savedFile
+        << "</edges>";
 
+    // Closing
+    savedFile
+        << "</graph>"
+        << "</gexf>";
+
+    savedFile.close();
+    std::cout << "GEXF file created.\n";
 }
 
 void Network::saveAxonalMap(std::string fileName)
@@ -911,7 +949,7 @@ void Network::loadConfigFile(std::string filename)
 
         // Save CUX
         if(dtreeparams.CUX)
-            saveCUX(CUXfile);        
+            saveCUX(CUXfile);
     }
 }
 
