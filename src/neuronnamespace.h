@@ -17,6 +17,7 @@
 #ifndef _NEURONNAMESPACE_H_
 #define _NEURONNAMESPACE_H_
 
+#include <iostream>
 #include <string>
 #include <sstream>
 
