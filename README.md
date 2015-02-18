@@ -1,10 +1,13 @@
-# Generates realistic neuronal networks using arbitrary geometrical patterns as a substrate
+# neurongen
+Generates realistic neuronal networks using arbitrary geometrical patterns as a substrate
 
 
 ## Dependencies
 
 Qt4
+
 gsl
+
 eigen3
 
 ## Step by step installation guide
