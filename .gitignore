@@ -20,3 +20,8 @@ sizes.txt
 axons.txt
 map.txt
 *.gexf
+
+# Patterns #
+############
+#patterns/*
+
