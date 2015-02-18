@@ -54,7 +54,7 @@ the borders of your image.
 Some basic patterns are provided in the patterns folder
 
 
-The default config.cfg file looks something like this:
+The provided config.cfg file looks something like this:
 ```
 # Default configuration file
 # Note, all metric units are in mm
@@ -63,69 +63,69 @@ version = 1.0;
 
 network:
 {
-    generation = true;       # true/false. If false it uses the files
-specified
-                             # in the input section to generate a new
-network
-                             # (this is experimental)
+    # Wheter you generate the network or not.
+    # If false it uses the files specified
+    # in the input section to generate a new network
+    # (this is experimental)
+    generation = true;       
 
-    pattern:                 # Pattern (substrate) parameters
+    # Pattern (substrate) parameters
+    pattern:                 
     {
-        file = "patterns/circ.png";   # Input file used to generate the pattern.
-                             # This file is a 2-bit png image (black &
-white)
-                             # That tells the program where neurons can
-grow:
-                             # (Black pixel = allowed / white pixel =
-forbidden)
-                             # Note that the program assumes periodic
-boundary 
-                             # conditions (toroidal). If you want to set
-non-periodic
-                             # boundary conditions just make the pixels
-in the border
-                             # white
+        # Input file used to generate the pattern.
+        # This file is a 2-bit png image (black & white)
+        # that tells the program where neurons can grow:
+        # (Black pixel = allowed / white pixel = forbidden)
+        # Note that the program assumes periodic boundary 
+        # conditions (toroidal). If you want to set non-periodic
+        # boundary conditions just make the pixels in the border
+        # white
+        file = "circ.png";
+        
+        # Width and height of the culture. The size of each pixel
+        # comes from dividing these values by the number of pixels
+        # in each dimension of the image. Ex. The circ.png image is
+        # 350x350 pixels. This corresponds to a pixel size of 
+        # ~0.03x0.03 mm. Note that if you want to use complex geometries
+        # you should set a pixel size bigger than the dendritic tree
+        # or you will run into bugs.
         width = 10.0;
-        height = 10.0;       # Width and height of the culture. The size
-of each pixel
-                             # comes from dividing these values by the
-number of pixels
-                             # in each dimension of the image. Ex. The
-circ.png image is
-                             # 350x350 pixels. This corresponds to a
-pixel size of 
-                             # ~0.03x0.03 mm. Note that if you want to
-use complex geometries
-                             # you should set a pixel size bigger than
-the dendritic tree
-                             # or you will run into bugs.
+        height = 10.0;       
     };
-    neurons = 20000;         # Number of neurons
+
+    # Number of neurons
+    neurons = 20000;
+    
     soma:
     {
-        radius = 0.0075;     # Soma radius (remember, in mm)
+        # Soma radius (remember, in mm)
+        radius = 0.0075;     
     };
+
     dendritic_tree:
     {
-        type = "homogeneous"; # (homogeneous/fractal) Type of dendritic
-tree structure.
-                              # fractal was never implemented.
-        shape = "circular";   # Shape of the dentric tree (only circular
-was implemented)
-        radius_distribution = "gaussian"; # Distribution used to
-generate the sizes 
-                              #(gaussian/rayleigh)
+        # (homogeneous/fractal) Type of dendritic tree structure.
+        # fractal was never implemented.
+        type = "homogeneous";
+        
+        # Shape of the dentric tree (only circular was implemented)
+        shape = "circular";
+        
+        # Distribution used to generate the sizes 
+        #(gaussian/rayleigh)
+        radius_distribution = "gaussian"; 
+        
+        # mean and std deviation parameters of the chosen distribution
         radius_mean = 0.15;
-        radius_std_dev = 0.02; # mean and std deviation parameters of
-the chosen distribution
+        radius_std_dev = 0.02; 
     };
+    
+    # Axon parameters, I will finish commenting them later.
+    # If you want more details look at neuron.cc and
+    # the neuronnamespace.h
     axon:
     {
-        type = "segmented";   # Axon parameters, I will finish comenting
-them later.
-                              # If you want more details look at
-neuron.cc and
-                              # the neuronnamespace.h
+        type = "segmented";   
         length_distribution = "rayleigh";
         length_mean = 0;
         length_std_deviation = 0.8;
@@ -145,6 +145,7 @@ neuron.cc and
         # Can be "pattern" "soma" "axon"
         collision_mode = "pattern";
     };
+    
     # Experimental, forget about CUX
     CUX:
     {
@@ -153,22 +154,27 @@ neuron.cc and
         dendritic_tree_multiplier = 1.5;
         file = "cux.txt";
     };
-    # Output files generated by the program (see the files headers for
-structure)
+    
+    # Output files generated by the program (see the files headers for structure)
     output:
     {
-      positions = "map.txt";      # Contains the positions of the
-neurons
-      axons = "axons.txt";        # Contains the positions of each axon
-      connections = "cons.txt";   # List of connections formed
-(adjacency matrix)
-      sizes = "sizes.txt";        # List of size parameters of each
-neuron
-        gexf = "network.gexf";      # The network in gexf format to load
-in gephi
+        # Contains the positions of the neurons
+      positions = "map.txt";
+        
+        # Contains the positions of each axon
+      axons = "axons.txt";
+        
+        # List of connections formed (adjacency matrix)
+      connections = "cons.txt";
+        
+        # List of size parameters of each neuron
+      sizes = "sizes.txt";
+
+        # The network in gexf format to load in gephi
+        gexf = "network.gexf";      
     };
-    # Input files used in case you do not generate the network
-(experimental)
+    
+    # Input files used in case you do not generate the network (experimental)
     input:
     {
         active = false;
