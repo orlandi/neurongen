@@ -1,10 +1,15 @@
-# Generates realistic neuronal networks using arbitrary geometrical patterns as a substrate
+# neurongen
+Generates realistic neuronal networks using arbitrary geometrical patterns as a substrate.
 
+This code was used to generate networks in the following paper, and its algorithmic details are explained in its supplementary information:  
+[Noise focusing and the emergence of coherent activity in neuronal cultures](http://www.nature.com/nphys/journal/v9/n9/full/nphys2686.html)  
+Nature Physics **9**, 582–590 (2013)
+
+If you ever use this code or are inspired by it, remember to cite the original publication!
 
 ## Dependencies
-
-Qt4
-gsl
+Qt4  
+gsl  
 eigen3
 
 ## Step by step installation guide
