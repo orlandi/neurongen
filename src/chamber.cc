@@ -267,8 +267,14 @@ bool Chamber::growConnections()
     return true;
 }
 
-bool Chamber::assignDensityMap(std::string fileName, double width, double height)
+bool Chamber::assignDensityMap()
 {
+    if(!param.densityMap)
+      return false;
+
+    std::string fileName = param.densityMapFile;
+    double width = param.densityMapBinWidth;
+    double height = param.densityMapBinHeight;
     std::ifstream inputFile;
     std::string line, tmpString, lineString;
     std::stringstream tmpStr, lineStream;

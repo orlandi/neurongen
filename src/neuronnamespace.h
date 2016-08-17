@@ -62,9 +62,12 @@ namespace neuron
     typedef struct chamberParameters
     {
         bool pattern;
+        bool densityMap;
         int type, units, dimensions;
         double width, height, radius;
+        double densityMapBinWidth, densityMapBinHeight;
         std::string patternFile;
+        std::string densityMapFile;
         std::string print()
         {
             std::stringstream tmpStr;
@@ -73,13 +76,15 @@ namespace neuron
                    << "Units: " << units << "\n"
                    << "Dimensions: " << dimensions << "\n"
                    << "Width: " << width << " Height: " << height << " Radius: " << radius << "\n"
-                   << "Pattern: " << pattern << " File: " << patternFile << "\n\n";
+                   << "Pattern: " << pattern << " File: " << patternFile << "\n"
+                   << "Density Map: " << densityMap << " File: " << densityMapFile << "\n"
+                   << "Density Map Bin Width: " << densityMapBinWidth << " Density Map Bin Height: " << densityMapBinHeight << "\n\n";
             return tmpStr.str();
         };
     } chamberParameters;
     // Temporary solution - need to use enums
     const chamberParameters DEFAULT_CHAMBER_PARAMETERS =
-        {false, -1, -1, -1, -1, -1, -1, ""};
+        {false, false, -1, -1, -1, -1, -1, -1, -1, -1, "", ""};
 
     typedef struct somaParameters
     {

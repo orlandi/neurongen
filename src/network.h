@@ -58,6 +58,7 @@ class Network
         libconfig::Config* configFile;
         bool inputActive;
         std::string inputAxonsFile, inputPositionsFile, CUXfile, gexfFile;
+        std::string densityMapFile;
 };
 
 #endif

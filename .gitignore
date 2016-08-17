@@ -12,6 +12,7 @@ batch.py
 # System files #
 # ##############
 .DS_Store
+*sublime*
 
 # Output files #
 ################

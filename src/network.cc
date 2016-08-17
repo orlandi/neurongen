@@ -55,7 +55,7 @@ void Network::generate()
     chamber->assignLattice();
     chamber->assignPatternDefects();
 
-//    chamber->assignDensityMap("densityMatrix.txt", 0.02, 0.02);
+    chamber->assignDensityMap();
 
     chamber->insertNeurons();
     chamber->growAxons();
@@ -759,7 +759,28 @@ void Network::loadConfigFile(std::string filename)
             std::cout << "Warning! Missing network.pattern.width\n";
         if(!configFile->lookupValue("network.pattern.height", cparams.height))
             std::cout << "Warning! Missing network.pattern.height\n";
-        
+        // Check for the density map
+        if(!configFile->lookupValue("network.densityMap.active", cparams.densityMap))
+            std::cout << "Warning! Missing network.densityMap.active. Not using any density map\n";
+        if(cparams.densityMap)
+        {
+          if(!configFile->lookupValue("network.densityMap.file", cparams.densityMapFile))
+          {
+            std::cout << "Main error. Missing network.densityMap.file\n";
+            exit(1);
+          }
+          if(!configFile->lookupValue("network.densityMap.binWidth", cparams.densityMapBinWidth))
+          {
+            std::cout << "Main error. Missing network.densityMap.binWidth\n";
+            exit(1);
+          }
+          if(!configFile->lookupValue("network.densityMap.binHeight", cparams.densityMapBinHeight))
+          {
+            std::cout << "Main error. Missing network.densityMap.binHeight\n";
+            exit(1);
+          }
+        }
+
         // Create the chamber
         addChamber(cparams);
         

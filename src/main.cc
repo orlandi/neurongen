@@ -21,11 +21,18 @@
 
 int main(int argc, char *argv[])
 {
+    std::stringstream configFile;
     Network *network;
     network = new Network();
 
+  	if (argc > 1)
+  	{
+    	configFile << argv[1];
+    	std::cout << "Loading Config File: " << configFile.str() << "\n";
+    	network->loadConfigFile(configFile.str());
+ 	}
+	else
     network->loadConfigFile("config.cfg");
 
     return 0;
 }
-

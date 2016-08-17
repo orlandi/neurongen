@@ -46,7 +46,7 @@ class Chamber
         bool assignLattice(int boundaries, Vector2d orig, double unitWidth, double unitHeight, double wid, double hei);
         bool assignLattice();
         bool assignPatternDefects();
-        bool assignDensityMap(std::string fileName, double width, double height);
+        bool assignDensityMap();
         bool insertNeurons(int num = 0);
         bool growAxons();
         bool growDendrites();
